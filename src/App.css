@@ -1,38 +1,61 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  margin: 10px;
+  font-family: Arial, sans-serif;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  h1 {
+  margin-bottom: 20px;
+  color:rgb(11, 1, 3);
   }
-  to {
-    transform: rotate(360deg);
+
+  h2 {
+    margin-bottom: 20 px;
+    color: rgb(117, 28, 32);
   }
+  
+  form {
+  display: inline-block;
+  text-align: left;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  }
+  
+  label {
+  margin-right: 10px;
+  }
+  
+  input[type="text"], select {
+  padding: 5px;
+  margin-bottom: 10px;
+  }
+  
+  .form-error {
+  color: red;
+  margin-bottom: 10px;
+  }
+  
+  button[type="submit"], button[type="reset"] {
+  margin-top: 10px;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: lightgray;
+  cursor: pointer;
+  }
+  
+  button[type="submit"]:hover, button[type="reset"]:hover {
+  background-color: gray;
+  }
+
+
+body{
+  background: #bca5b1;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #aa91a0, #a890a1, #958090);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8d7585, #957e8e, rgb(129, 113, 123)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
 }
+
+
