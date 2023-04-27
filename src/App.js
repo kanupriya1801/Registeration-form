@@ -59,7 +59,7 @@ function App() {
     }
 
     if (!email.includes("@")) {
-      setemailError("Email must contain @")
+      setemailError("Email must contain at the rate")
       return false
     }
 
