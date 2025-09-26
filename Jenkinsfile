@@ -1,36 +1,63 @@
 pipeline {
-    agent any
+    agent { label 'docker-node' }
 
-    environment {
-        JIRA_SITE = 'https://kanupriya18701-1758796370320.atlassian.net'
-        JIRA_ISSUE_KEY = 'SCRUM-6'
+    triggers {
+        // Optional: Use GitHub webhook instead of polling
+        // pollSCM('* * * * *') 
+    }
+
+    options {
+        skipDefaultCheckout(true)
     }
 
     stages {
-        stage('Notify Jira') {
+        stage('Checkout') {
+            when {
+                branch pattern: "main|feature\\/SCRUM-\\d+", comparator: "REGEXP"
+            }
             steps {
-                withCredentials([string(credentialsId: 'jira-credentials', variable: 'JIRA_API_TOKEN')]) {
-                    script {
-                        def comment = "Build #${env.BUILD_NUMBER} completed. Triggering Jira automation."
-                        def jiraUrl = "${JIRA_SITE}/rest/api/3/issue/${JIRA_ISSUE_KEY}/comment"
+                checkout scm
+                echo "Checked out branch: ${env.BRANCH_NAME}"
+            }
+        }
 
-                        def payload = """{
-                          \"body\": \"${comment}\"
-                        }"""
+        stage('Build') {
+            when {
+                branch pattern: "main|feature\\/SCRUM-\\d+", comparator: "REGEXP"
+            }
+            steps {
+                echo "Running build on docker-node..."
+                // Add your actual build steps here
+            }
+        }
 
-                        httpRequest(
-                            httpMode: 'POST',
-                            url: jiraUrl,
-                            contentType: 'APPLICATION_JSON',
-                            requestBody: payload,
-                            customHeaders: [
-                                [name: 'Authorization', value: "Bearer ${JIRA_API_TOKEN}"]
-                            ]
-                        )
-                    }
-                }
+        stage('Test') {
+            when {
+                branch pattern: "main|feature\\/SCRUM-\\d+", comparator: "REGEXP"
+            }
+            steps {
+                echo "Running tests..."
+                // Add test steps here
+            }
+        }
+
+        stage('Post Build Status to Jira') {
+            when {
+                branch pattern: "main|feature\\/SCRUM-\\d+", comparator: "REGEXP"
+            }
+            steps {
+                echo "Posting build status to Jira for ${env.BRANCH_NAME}"
+                // Use Jira plugin or REST API here
             }
         }
     }
-}
 
+    post {
+        success {
+            echo "Build succeeded"
+        }
+        failure {
+            echo "Build failed"
+        }
+    }
+}
