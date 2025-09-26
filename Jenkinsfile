@@ -5,7 +5,7 @@ pipeline {
         JIRA_SITE = 'https://kanupriya18701-1758796370320.atlassian.net'
         JIRA_ISSUE_KEY = 'SCRUM-6'
         JIRA_EMAIL = 'kanupriya18701@gmail.com'
-        JIRA_API_TOKEN = credentials('jira-api-token') // stored securely
+        JIRA_API_TOKEN = credentials('jira-credentials') // stored securely
     }
 
     stages {
