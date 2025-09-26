@@ -1,22 +1,11 @@
 pipeline {
-    agent any
-
+    agent { label 'docker-node' }
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Build') {
-            steps {
-    stages {
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
@@ -37,16 +26,11 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'build/**', allowEmptyArchive: true
         }
-    }
-        }
-    }
-
-    post {
         success {
-            echo "Build succeeded"
+            echo 'Build succeeded'
         }
         failure {
-            echo "Build failed"
+            echo 'Build failed'
         }
     }
 }
