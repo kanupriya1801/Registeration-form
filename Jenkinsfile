@@ -16,23 +16,37 @@ pipeline {
 
         stage('Build') {
             steps {
+    stages {
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Run tests') {
+            steps {
+                sh 'npm test -- --watchAll=false'
+            }
+        }
+        stage('Build') {
+            steps {
                 sh 'npm run build'
             }
         }
-
-        stage('Test') {
-            steps {
-                sh 'npm test || true' // Optional: adjust based on your test setup
-            }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'build/**', allowEmptyArchive: true
+        }
+    }
         }
     }
 
     post {
         success {
-            echo "✅ Build succeeded"
+            echo "Build succeeded"
         }
         failure {
-            echo "❌ Build failed"
+            echo "Build failed"
         }
     }
 }
