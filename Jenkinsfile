@@ -102,5 +102,25 @@ pipeline {
                 jiraSendDeploymentInfo site: JIRA_SITE, environmentId: 'production', environmentName: 'Production', deploymentState: 'successful'
             }
         }*/
+        /*stage('Deploy to OpenShift (Green)') {
+            steps {
+                script {
+                    sh """
+                       helm upgrade --install ${OPENSHIFT_HELM_RELEASE_NAME} ./${OPENSHIFT_HELM_CHART_NAME} \
+                       --set image.repository=${DOCKER_IMAGE} \
+                       --set image.tag=${env.BUILD_NUMBER} \
+                       --kube-context openshift-sandbox \
+                       --namespace green --create-namespace
+                    """
+                 }
+             }
+        }
+
+        stage('Update Jira') {
+            steps {
+                jiraSendBuildInfo site: JIRA_SITE, buildNumber: env.BUILD_NUMBER
+                jiraSendDeploymentInfo site: JIRA_SITE, environmentId: 'production', environmentName: 'Production', deploymentState: 'successful'
+            }
+        }*/
     } 
 }
