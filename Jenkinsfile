@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE = "kanupriya18/registration-app"
         DOCKER_CREDENTIALS_ID = "dockerhub-creds"
         HELM_RELEASE_NAME = "registration-release"
-        HELM_CHART_NAME = "to-do-chart"
+        HELM_CHART_NAME = "registration-chart"
         //KUBE_CONTEXT = "minikube"
         OPENSHIFT_HELM_RELEASE_NAME = "registration-green"
         OPENSHIFT_HELM_CHART_NAME = "chart-openshift"
@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                       helm upgrade --install registration-release ./to-do-chart \
+                       helm upgrade --install registration-release ./registration-chart \
                        --set image.repository=${DOCKER_IMAGE} \
                        --set image.tag=${env.BUILD_NUMBER} \
                        --kubeconfig /home/ubuntu/.kube/config
